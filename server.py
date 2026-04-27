@@ -8,7 +8,6 @@ import signal
 import stat
 import subprocess
 import sys
-import urllib.error
 import urllib.parse
 import urllib.request
 import zipfile
@@ -344,7 +343,7 @@ async def main() -> None:
     for sig in (signal.SIGINT, signal.SIGTERM):
         try:
             loop.add_signal_handler(sig, request_stop)
-        except NotImplementedError:
+        except (NotImplementedError, RuntimeError, ValueError):
             pass
 
     async with server:
